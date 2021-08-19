@@ -10,7 +10,7 @@ public class TapToPlace : MonoBehaviour
     public ARSessionOrigin ARSessionOrigin;
     public ARRaycastManager ARRaycastManager;
 
-    private List<ARRaycastHit> _hits; 
+    private List<ARRaycastHit> _hits = new List<ARRaycastHit>(); 
 
     private void Start()
     {
@@ -21,8 +21,11 @@ public class TapToPlace : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
-            if(ARRaycastManager.Raycast(Input.GetTouch(0).position, _hits, TrackableType.Planes))
+            if (ARRaycastManager.Raycast(Input.GetTouch(0).position, _hits, TrackableType.Planes))
+            {
+                ObjectToPlace.SetActive(true);
                 ARSessionOrigin.MakeContentAppearAt(ObjectToPlace.transform, _hits[0].pose.position);
+            }
         }
     }
 }
